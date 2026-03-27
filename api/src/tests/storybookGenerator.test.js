@@ -3,6 +3,10 @@ import { transformPitchToUX } from '../engine/pitchTransformer.js';
 import { generateComponents } from '../engine/componentGenerator.js';
 import fs from 'fs-extra';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 describe('Storybook Generator', () => {
   test('should generate storybook structure', async () => {
@@ -20,7 +24,8 @@ describe('Storybook Generator', () => {
     const components = generateComponents(uxModel);
     const result = await generateStorybook(uxModel, components);
     
-    const storybookPath = path.join(process.cwd(), '../../storybook', result.projectName);
+    // Utiliser le chemin relatif au projet
+    const storybookPath = path.join(__dirname, '../../storybook', result.projectName);
     expect(await fs.pathExists(path.join(storybookPath, 'package.json'))).toBe(true);
     expect(await fs.pathExists(path.join(storybookPath, 'index.html'))).toBe(true);
   });
