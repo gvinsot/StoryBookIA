@@ -19,15 +19,10 @@ const designMemory = new DesignMemory();
 function generateComponentCode(component, uxModel) {
   const { name, props } = component;
 
-  // Props destructuring avec valeurs par défaut
-  const propsWithDefaults = props.map(p => {
-    if (p.default) {
-      return `${p.name} = ${typeof p.default === 'string' ? `'${p.default}'` : p.default}`;
-    }
-    return p.name;
-  });
-
-  const propsString = propsWithDefaults.length > 0 ? `{ ${propsWithDefaults.join(', ')} }` : '{}';
+  // Props destructuring
+  const propsString = props.length > 0
+    ? props.map(p => `${p.name}${p.required ? '' : '='}`).join(', ')
+    : '';
 
   // Interface JSDoc
   const jsdoc = `/**
@@ -101,38 +96,19 @@ export const ${name} = (${propsString}) => {
   );`;
       break;
 
-    case 'Select':
-      componentCode += `  const { value, onChange, options, label } = props;
-  
-  return (
-    <div className="select-group">
-      {label && <label className="select-label">{label}</label>}
-      <select className="select" value={value} onChange={onChange}>
-        {options.map(opt => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-    </div>
-  );`;
-      break;
-
     case 'Calendar':
       componentCode += `  const { value, onChange, minDate, maxDate, disabledDates = [] } = props;
   
-  const handleDateChange = (date) => {
-    if (onChange) onChange(new Date(date));
+  const handleDateSelect = (date) => {
+    if (onChange) onChange(date);
   };
   
   return (
     <div className="calendar">
       <div className="calendar-header">
-        <button className="calendar-nav">&lt;</button>
-        <span className="calendar-title">
-          {value ? value.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }) : 'Mois'}
-        </span>
-        <button className="calendar-nav">&gt;</button>
+        <button className="calendar-prev">&lt;</button>
+        <span className="calendar-month">Mois Année</span>
+        <button className="calendar-next">&gt;</button>
       </div>
       <div className="calendar-grid">
         {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map(day => (
@@ -142,9 +118,9 @@ export const ${name} = (${propsString}) => {
           <div 
             key={i} 
             className={\`calendar-day \${i % 7 === 0 || i % 7 === 6 ? 'weekend' : ''}\`}
-            onClick={() => handleDateChange(new Date(2024, 0, i - 2))}
+            onClick={() => handleDateSelect(new Date())}
           >
-            {i > 2 && i < 33 ? i - 2 : ''}
+            {i + 1}
           </div>
         ))}
       </div>
@@ -167,9 +143,9 @@ export const ${name} = (${propsString}) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((row, rowIndex) => (
+        {data.map((row, idx) => (
           <tr 
-            key={rowIndex} 
+            key={idx} 
             className={\${onRowClick ? 'clickable' : ''}\}
             onClick={() => onRowClick && onRowClick(row)}
           >
@@ -187,10 +163,8 @@ export const ${name} = (${propsString}) => {
       componentCode += `  const { message, type = 'info', duration = 3000, onClose } = props;
   
   React.useEffect(() => {
-    if (duration > 0) {
-      const timer = setTimeout(() => {
-        if (onClose) onClose();
-      }, duration);
+    if (duration > 0 && onClose) {
+      const timer = setTimeout(onClose, duration);
       return () => clearTimeout(timer);
     }
   }, [duration, onClose]);
@@ -200,16 +174,6 @@ export const ${name} = (${propsString}) => {
       <span className="notification-message">{message}</span>
       <button className="notification-close" onClick={onClose}>×</button>
     </div>
-  );`;
-      break;
-
-    case 'Badge':
-      componentCode += `  const { children, variant = 'primary', size = 'medium' } = props;
-  
-  return (
-    <span className={\`badge badge-\${variant} badge-\${size}\`}>
-      {children}
-    </span>
   );`;
       break;
 
@@ -235,18 +199,53 @@ export const ${name} = (${propsString}) => {
   return (
     <div 
       className="grid"
-      style={{ '--grid-columns': columns, '--grid-gap': \`\${gap}px\` }}
+      style={{ 
+        display: 'grid', 
+        gridTemplateColumns: \`repeat(\${columns}, 1fr)\`,
+        gap: \`\${gap}px\`
+      }}
     >
       {children}
     </div>
   );`;
       break;
 
+    case 'Select':
+      componentCode += `  const { value, onChange, options, label } = props;
+  
+  return (
+    <div className="select-group">
+      {label && <label className="select-label">{label}</label>}
+      <select className="select" value={value} onChange={onChange}>
+        {options.map(opt => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );`;
+      break;
+
+    case 'Badge':
+      componentCode += `  const { children, variant = 'primary', size = 'medium' } = props;
+  
+  return (
+    <span className={\`badge badge-\${variant} badge-\${size}\`}>
+      {children}
+    </span>
+  );`;
+      break;
+
     default:
-      componentCode += `  return <div className="${name.toLowerCase()}">{props.children}</div>;`;
+      componentCode += `  return (
+    <div className="${name.toLowerCase()}">
+      {props.children || '${name} Component'}
+    </div>
+  );`;
   }
 
-  componentCode += `\n};\n\nexport default ${name};\n`;
+  componentCode += '\\n};\\n\\nexport default ${name};\\n';
 
   return componentCode;
 }
@@ -255,10 +254,11 @@ export const ${name} = (${propsString}) => {
  * Génère le CSS d'un composant
  */
 function generateComponentCSS(component) {
-  const name = component.name.toLowerCase();
-
-  const cssTemplates = {
-    container: `.container {
+  const name = component.name;
+  
+  const cssMap = {
+    Container: `
+.container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 16px;
@@ -266,41 +266,48 @@ function generateComponentCSS(component) {
 
 .container.fluid {
   max-width: 100%;
-}`,
-
-    card: `.card {
+}
+`,
+    Card: `
+.card {
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  padding: 16px;
+  margin: 8px 0;
 }
 
-.card:hover {
+.card.hoverable {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card.hoverable:hover {
+  transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .card-header {
-  padding: 16px;
-  border-bottom: 1px solid #e5e7eb;
+  font-size: 18px;
   font-weight: 600;
+  margin-bottom: 12px;
 }
 
 .card-body {
-  padding: 16px;
+  color: #333;
 }
 
 .card-footer {
-  padding: 16px;
-  border-top: 1px solid #e5e7eb;
-  background: #f9fafb;
-}`,
-
-    button: `.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+`,
+    Button: `
+.btn {
   border: none;
   border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
@@ -325,38 +332,53 @@ function generateComponentCSS(component) {
   color: white;
 }
 
+.btn-secondary:hover:not(:disabled) {
+  background: #4b5563;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #dc2626;
+}
+
 .btn-small {
-  padding: 6px 12px;
-  font-size: 14px;
+  padding: 4px 8px;
+  font-size: 12px;
 }
 
 .btn-medium {
   padding: 8px 16px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .btn-large {
   padding: 12px 24px;
-  font-size: 18px;
-}`,
-
-    input: `.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  font-size: 16px;
+}
+`,
+    Input: `
+.input-group {
+  margin: 8px 0;
 }
 
 .input-label {
+  display: block;
+  margin-bottom: 4px;
   font-size: 14px;
   font-weight: 500;
   color: #374151;
 }
 
 .input {
+  width: 100%;
   padding: 8px 12px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 14px;
   transition: border-color 0.2s;
 }
 
@@ -371,37 +393,14 @@ function generateComponentCSS(component) {
 }
 
 .input-error {
+  display: block;
+  margin-top: 4px;
   font-size: 12px;
   color: #ef4444;
-}`,
-
-    select: `.select-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
 }
-
-.select-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-}
-
-.select {
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 16px;
-  background: white;
-  cursor: pointer;
-}
-
-.select:focus {
-  outline: none;
-  border-color: #3b82f6;
-}`,
-
-    calendar: `.calendar {
+`,
+    Calendar: `
+.calendar {
   background: white;
   border-radius: 8px;
   padding: 16px;
@@ -415,17 +414,17 @@ function generateComponentCSS(component) {
   margin-bottom: 16px;
 }
 
-.calendar-nav {
+.calendar-header button {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
   padding: 4px 8px;
 }
 
-.calendar-title {
+.calendar-month {
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .calendar-grid {
@@ -447,8 +446,9 @@ function generateComponentCSS(component) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  font-size: 14px;
   cursor: pointer;
+  border-radius: 4px;
   transition: background 0.2s;
 }
 
@@ -458,9 +458,10 @@ function generateComponentCSS(component) {
 
 .calendar-day.weekend {
   color: #ef4444;
-}`,
-
-    table: `.table {
+}
+`,
+    Table: `
+.table {
   width: 100%;
   border-collapse: collapse;
   background: white;
@@ -479,9 +480,7 @@ function generateComponentCSS(component) {
 .table th {
   background: #f9fafb;
   font-weight: 600;
-  font-size: 14px;
-  text-transform: uppercase;
-  color: #6b7280;
+  color: #374151;
 }
 
 .table tbody tr:hover {
@@ -490,27 +489,21 @@ function generateComponentCSS(component) {
 
 .table tbody tr.clickable {
   cursor: pointer;
-}`,
+}
 
-    notification: `.notification {
+.table tbody tr.clickable:hover {
+  background: #f3f4f6;
+}
+`,
+    Notification: `
+.notification {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
+  padding: 12px 16px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  margin: 8px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .notification-info {
@@ -537,20 +530,120 @@ function generateComponentCSS(component) {
   background: none;
   border: none;
   color: inherit;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
   opacity: 0.8;
 }
 
 .notification-close:hover {
   opacity: 1;
-}`,
+}
+`,
+    Modal: `
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
 
-    badge: `.badge {
+.modal {
+  background: white;
+  border-radius: 8px;
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+}
+
+.modal-small {
+  width: 400px;
+}
+
+.modal-medium {
+  width: 600px;
+}
+
+.modal-large {
+  width: 800px;
+}
+
+.modal-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.modal-close:hover {
+  color: #374151;
+}
+`,
+    Grid: `
+.grid {
+  display: grid;
+  gap: 16px;
+}
+`,
+    Select: `
+.select-group {
+  margin: 8px 0;
+}
+
+.select-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  transition: border-color 0.2s;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+`,
+    Badge: `
+.badge {
   display: inline-flex;
   align-items: center;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -575,93 +668,22 @@ function generateComponentCSS(component) {
 }
 
 .badge-small {
-  font-size: 12px;
+  padding: 1px 6px;
+  font-size: 10px;
 }
 
 .badge-medium {
-  font-size: 14px;
-}`,
-
-    modal: `.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  padding: 2px 8px;
+  font-size: 12px;
 }
-
-.modal {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  animation: modalIn 0.3s ease;
-}
-
-@keyframes modalIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.modal-small {
-  width: 400px;
-  max-width: 90vw;
-}
-
-.modal-medium {
-  width: 600px;
-  max-width: 90vw;
-}
-
-.modal-large {
-  width: 800px;
-  max-width: 90vw;
-}
-
-.modal-header {
-  padding: 20px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.modal-body {
-  padding: 20px;
-}
-
-.modal-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #6b7280;
-}
-
-.modal-close:hover {
-  color: #374151;
-}`,
-
-    grid: `.grid {
-  display: grid;
-  grid-template-columns: repeat(var(--grid-columns, 12), 1fr);
-  gap: var(--grid-gap, 16px);
-}`
+`
   };
 
-  return cssTemplates[name] || `.${name} {
+  return cssMap[name] || `
+.${name.toLowerCase()} {
   /* Styles par défaut */
-}`;
+}
+`;
 }
 
 /**
@@ -669,7 +691,7 @@ function generateComponentCSS(component) {
  */
 function generateStories(component, uxModel) {
   const { name, props } = component;
-
+  
   let stories = `import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ${name} } from './${name}';
@@ -677,10 +699,10 @@ import { ${name} } from './${name}';
 const meta = {
   title: 'Components/${name}',
   component: ${name},
-  tags: ['autodocs'],
-  argTypes: {
-${props.map(p => `    ${p.name}: { control: '${p.type === 'boolean' ? 'boolean' : p.type === 'function' ? 'action' : 'text'}' }`).join(',\n')}
+  parameters: {
+    layout: 'centered',
   },
+  tags: ['autodocs'],
 } satisfies Meta<typeof ${name}>;
 
 export default meta;
@@ -691,162 +713,188 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
   args: {
-${props.filter(p => p.default).map(p => `    ${p.name}: ${typeof p.default === 'string' ? `'${p.default}'` : p.default},`).join('\n')}
-  },
+`;
+
+  // Générer les args par défaut
+  props.forEach(prop => {
+    if (prop.name === 'children') {
+      stories += `    children: 'Contenu de ${name}',\n`;
+    } else if (prop.default) {
+      stories += `    ${prop.name}: ${typeof prop.default === 'string' ? `'${prop.default}'` : prop.default},\n`;
+    } else if (prop.type === 'string') {
+      stories += `    ${prop.name}: 'Valeur par défaut',\n`;
+    } else if (prop.type === 'boolean') {
+      stories += `    ${prop.name}: false,\n`;
+    } else if (prop.type === 'number') {
+      stories += `    ${prop.name}: 0,\n`;
+    } else if (prop.type === 'function') {
+      stories += `    ${prop.name}: () => console.log('${prop.name}'),\n`;
+    } else if (prop.type === 'array') {
+      stories += `    ${prop.name}: [],\n`;
+    } else if (prop.type === 'node') {
+      stories += `    ${prop.name}: null,\n`;
+    } else {
+      stories += `    ${prop.name}: undefined,\n`;
+    }
+  });
+
+  stories += `  },
 };
 
 /**
- * Story avec tous les props
+ * Variantes pour ${name}
  */
-export const AllProps: Story = {
+`;
+
+  // Générer des variantes selon le composant
+  if (name === 'Button') {
+    stories += `
+export const Primary: Story = {
   args: {
-${props.map(p => `    ${p.name}: ${p.type === 'boolean' ? 'true' : p.type === 'function' ? '() => console.log("test")' : p.type === 'array' ? '[]' : p.type === 'node' ? '<div>Content</div>' : `'${p.name} value'`},`).join(',\n')}
+    children: 'Bouton Primaire',
+    variant: 'primary',
+    size: 'medium',
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    children: 'Bouton Secondaire',
+    variant: 'secondary',
+    size: 'medium',
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    children: 'Bouton Désactivé',
+    variant: 'primary',
+    disabled: true,
   },
 };
 `;
+  } else if (name === 'Card') {
+    stories += `
+export const WithTitle: Story = {
+  args: {
+    children: 'Contenu de la carte',
+    title: 'Titre de la carte',
+  },
+};
 
-  // Stories spécifiques par composant
-  switch (name) {
-    case 'Button':
-      stories += `
-/**
- * Bouton primaire
- */
+export const WithFooter: Story = {
+  args: {
+    children: 'Contenu de la carte',
+    title: 'Titre de la carte',
+    footer: <Button>Action</Button>,
+  },
+};
+
+export const Hoverable: Story = {
+  args: {
+    children: 'Carte survolvable',
+    hoverable: true,
+  },
+};
+`;
+  } else if (name === 'Notification') {
+    stories += `
+export const Info: Story = {
+  args: {
+    message: 'Information',
+    type: 'info',
+    duration: 0,
+  },
+};
+
+export const Success: Story = {
+  args: {
+    message: 'Opération réussie !',
+    type: 'success',
+    duration: 0,
+  },
+};
+
+export const Warning: Story = {
+  args: {
+    message: 'Attention : vérifiez vos données',
+    type: 'warning',
+    duration: 0,
+  },
+};
+
+export const Error: Story = {
+  args: {
+    message: 'Une erreur est survenue',
+    type: 'error',
+    duration: 0,
+  },
+};
+`;
+  } else if (name === 'Modal') {
+    stories += `
+export const Small: Story = {
+  args: {
+    isOpen: true,
+    title: 'Modale petite',
+    size: 'small',
+    children: 'Contenu de la modale',
+    onClose: () => console.log('close'),
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    isOpen: true,
+    title: 'Modale moyenne',
+    size: 'medium',
+    children: 'Contenu de la modale',
+    onClose: () => console.log('close'),
+  },
+};
+
+export const Large: Story = {
+  args: {
+    isOpen: true,
+    title: 'Modale grande',
+    size: 'large',
+    children: 'Contenu de la modale',
+    onClose: () => console.log('close'),
+  },
+};
+`;
+  } else if (name === 'Badge') {
+    stories += `
 export const Primary: Story = {
   args: {
-    children: 'Primary Button',
+    children: 'Badge',
     variant: 'primary',
   },
 };
 
-/**
- * Bouton secondaire
- */
-export const Secondary: Story = {
-  args: {
-    children: 'Secondary Button',
-    variant: 'secondary',
-  },
-};
-
-/**
- * Bouton désactivé
- */
-export const Disabled: Story = {
-  args: {
-    children: 'Disabled Button',
-    disabled: true,
-  },
-};
-`;
-      break;
-
-    case 'Input':
-      stories += `
-/**
- * Input avec label
- */
-export const WithLabel: Story = {
-  args: {
-    label: 'Email Address',
-    placeholder: 'Enter your email',
-  },
-};
-
-/**
- * Input avec erreur
- */
-export const WithError: Story = {
-  args: {
-    label: 'Email Address',
-    value: 'invalid-email',
-    error: 'Please enter a valid email address',
-  },
-};
-
-/**
- * Input désactivé
- */
-export const Disabled: Story = {
-  args: {
-    label: 'Read Only Field',
-    value: 'Cannot edit this',
-    disabled: true,
-  },
-};
-`;
-      break;
-
-    case 'Card':
-      stories += `
-/**
- * Carte simple
- */
-export const Simple: Story = {
-  args: {
-    children: 'Card content goes here',
-  },
-};
-
-/**
- * Carte avec titre
- */
-export const WithTitle: Story = {
-  args: {
-    title: 'Card Title',
-    children: 'Card content with a title above it',
-  },
-};
-
-/**
- * Carte avec footer
- */
-export const WithFooter: Story = {
-  args: {
-    title: 'Card with Footer',
-    children: 'Main card content',
-    footer: <Button>Action</Button>
-  },
-};
-`;
-      break;
-
-    case 'Notification':
-      stories += `
-/**
- * Notification info
- */
-export const Info: Story = {
-  args: {
-    message: 'This is an informational message',
-    type: 'info',
-  },
-};
-
-/**
- * Notification succès
- */
 export const Success: Story = {
   args: {
-    message: 'Operation completed successfully!',
-    type: 'success',
+    children: 'Succès',
+    variant: 'success',
   },
 };
 
-/**
- * Notification erreur
- */
-export const Error: Story = {
+export const Warning: Story = {
   args: {
-    message: 'An error occurred. Please try again.',
-    type: 'error',
+    children: 'Attention',
+    variant: 'warning',
+  },
+};
+
+export const Danger: Story = {
+  args: {
+    children: 'Erreur',
+    variant: 'danger',
   },
 };
 `;
-      break;
   }
 
-  stories += `\nexport default meta;\n`;
   return stories;
 }
 
@@ -854,56 +902,52 @@ export const Error: Story = {
  * Génère tous les composants nécessaires
  */
 export function generateComponents(uxModel) {
-  console.log('🧩 Generating components...');
-  
   const components = [];
   const componentNames = uxModel.componentRequirements.map(req => req.name);
   
   for (const componentName of componentNames) {
-    // Chercher dans la Design Memory
-    const existingComponent = designMemory.searchComponents(componentName)[0];
+    // Rechercher dans la Design Memory
+    const existingComponents = designMemory.searchComponents(componentName);
     
-    if (existingComponent) {
-      console.log(`  ♻️ Reusing existing component: ${componentName}`);
+    if (existingComponents.length > 0) {
+      // Utiliser le composant existant
+      const component = existingComponents[0];
+      const code = generateComponentCode(component, uxModel);
+      const css = generateComponentCSS(component);
+      const stories = generateStories(component, uxModel);
+      
       components.push({
-        ...existingComponent,
-        generated: true,
-        code: generateComponentCode(existingComponent, uxModel),
-        css: generateComponentCSS(existingComponent),
-        stories: generateStories(existingComponent, uxModel)
+        ...component,
+        code,
+        css,
+        stories,
+        reused: true
       });
+      
+      console.log(`♻️ Reused component: ${componentName}`);
     } else {
-      console.log(`  🆕 Creating new component: ${componentName}`);
-      // Créer un composant générique
+      // Créer un nouveau composant
       const newComponent = {
         id: crypto.randomUUID(),
         name: componentName,
         type: 'custom',
-        category: 'custom',
-        description: `Composant ${componentName} généré automatiquement`,
-        props: [{ name: 'children', type: 'node', required: false, description: 'Contenu' }],
+        category: 'generated',
+        description: `Composant généré pour ${uxModel.name}`,
+        props: [
+          { name: 'children', type: 'node', required: false, description: 'Contenu' }
+        ],
         tags: [componentName.toLowerCase(), 'generated'],
-        createdAt: new Date().toISOString(),
-        generated: true,
-        code: generateComponentCode({ name: componentName, props: [{ name: 'children', type: 'node', required: false, description: 'Contenu' }] }, uxModel),
-        css: `.${componentName.toLowerCase()} { /* Styles personnalisées */ }`,
-        stories: generateStories({ name: componentName, props: [{ name: 'children', type: 'node', required: false, description: 'Contenu' }] }, uxModel)
+        code: generateComponentCode({ name: componentName, props: [{ name: 'children', type: 'node', required: false }] }, uxModel),
+        css: generateComponentCSS({ name: componentName }),
+        stories: generateStories({ name: componentName, props: [{ name: 'children', type: 'node', required: false }] }, uxModel),
+        reused: false
       };
       
-      // Enregistrer dans la Design Memory pour réutilisation future
-      designMemory.registerComponent({
-        name: componentName,
-        type: 'custom',
-        props: newComponent.props,
-        description: newComponent.description,
-        category: 'custom'
-      });
-      
       components.push(newComponent);
+      console.log(`✨ Created new component: ${componentName}`);
     }
   }
   
-  console.log(`✅ Generated ${components.length} components`);
   return components;
 }
 

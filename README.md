@@ -1,53 +1,59 @@
 # StoryBook IA - POC de Génération Automatique de Storybook
 
-Un système capable de générer automatiquement un Storybook fonctionnel à partir d'un pitch produit non structuré, en utilisant une architecture "reuse-first" avec Design Memory.
-
 ## 🎯 Objectif
 
-Créer un POC fonctionnel qui:
-1. Transforme un pitch produit en modèle UX structuré
-2. Génère des composants React réutilisables
-3. Produit un Storybook exploitable par des développeurs
+Ce POC démontre la capacité de générer automatiquement un Storybook fonctionnel à partir d'un pitch produit non structuré, en utilisant une architecture "reuse-first" basée sur une Design Memory.
 
 ## 🏗️ Architecture
 
 ```
 StoryBookIA/
-├── api/                          # Backend Node.js (Express)
+├── api/                          # Backend Node.js
 │   ├── src/
-│   │   ├── index.js              # Point d'entrée
-│   │   ├── routes/               # Routes API
-│   │   ├── engine/               # Moteurs de transformation
-│   │   │   ├── pitchTransformer.js    # Pitch → UX Model
-│   │   │   ├── componentGenerator.js  # UX Model → React Components
-│   │   │   └── storybookGenerator.js  # Components → Storybook
-│   │   └── memory/
-│   │       └── designMemory.js   # Base de composants réutilisables
+│   │   ├── index.js             # Point d'entrée Express
+│   │   ├── routes/              # Routes API
+│   │   │   ├── pitchToUX.js     # Transformation Pitch → UX
+│   │   │   ├── components.js    # Gestion des composants
+│   │   │   └── storybook.js     # Génération Storybook
+│   │   ├── engine/              # Moteurs de génération
+│   │   │   ├── pitchTransformer.js    # Analyse du pitch
+│   │   │   ├── componentGenerator.js  # Génération de composants
+│   │   │   └── storybookGenerator.js  # Génération de Storybook
+│   │   └── memory/              # Design Memory
+│   │       └── designMemory.js  # Base de composants réutilisables
 │   └── package.json
-├── design-memory/                # Base de composants
-│   └── components.json
-├── generated-projects/           # Projets générés
-└── storybook/                    # Storybooks générés
+├── storybook/                    # Storybooks générés
+├── generated-projects/           # Projets générés (JSON)
+└── design-memory/                # Base de composants
+    └── components.json
 ```
 
-## 🚀 Installation
+## 🚀 Fonctionnalités
 
-```bash
-# Installer les dépendances du backend
-cd api
-npm install
+### 1. Analyse de Pitch
+- Extraction automatique des features, entités, actions et rôles
+- Génération d'un modèle UX structuré
+- Détection des pages nécessaires
 
-# Démarrer le backend
-npm start
-```
+### 2. Design Memory
+- Base de composants pré-définis (Container, Card, Button, Input, etc.)
+- Recherche sémantique de composants
+- Architecture "reuse-first": réutilisation avant création
 
-Le backend sera disponible sur http://localhost:3001
+### 3. Génération de Composants
+- Code React complet avec props et documentation
+- CSS stylisé et responsive
+- Stories Storybook automatiques
 
-## 📡 API
+### 4. Génération de Storybook
+- Configuration complète (.storybook/main.ts, preview.ts)
+- Fichiers de build (vite, typescript)
+- README généré automatiquement
+
+## 📝 API
 
 ### POST /api/pitch/transform
-
-Transforme un pitch produit en modèle UX et génère un Storybook complet.
+Transforme un pitch produit en modèle UX et génère le Storybook.
 
 **Request:**
 ```json
@@ -60,88 +66,89 @@ Transforme un pitch produit en modèle UX et génère un Storybook complet.
 ```json
 {
   "projectId": "uuid",
-  "projectPath": "/generated-projects/uuid",
   "uxModel": {...},
   "componentsCount": 8,
-  "storybookUrl": "/storybook/project-name"
+  "storybookUrl": "/storybook/uuid"
 }
 ```
 
 ### GET /api/components/list
-
 Liste tous les composants disponibles dans la Design Memory.
 
-### GET /api/components/search?query=calendar
-
-Recherche des composants par nom, description ou tags.
+### GET /api/components/search?query=button
+Recherche des composants par requête textuelle.
 
 ### POST /api/components/register
-
 Enregistre un nouveau composant dans la Design Memory.
 
-## 🧩 Design Memory
+## 🏃 Installation et Lancement
 
-La Design Memory est une base de composants réutilisables qui suit le principe "reuse-first":
+### Backend
+```bash
+cd api
+npm install
+npm start
+```
 
-### Composants disponibles par défaut:
+Le backend sera disponible sur http://localhost:3001
 
-**Layout:**
-- Container - Conteneur principal avec padding et max-width
-- Grid - Système de grille responsive
-- Card - Carte avec bordure et ombre
+### Test avec curl
+```bash
+curl -X POST http://localhost:3001/api/pitch/transform \
+  -H "Content-Type: application/json" \
+  -d '{"pitch": "Application de gestion de réservations de salles avec calendrier, filtres, notifications et dashboard admin"}'
+```
 
-**Form:**
-- Input - Champ de saisie texte
-- Select - Liste déroulante
-- Button - Bouton d'action
+### Storybook Généré
+Une fois le projet généré, naviguez vers la URL retournée pour voir le Storybook.
 
-**Display:**
-- Calendar - Calendrier interactif
-- Table - Tableau de données
-- Notification - Notification toast
-- Badge - Badge d'information
+## 🧩 Composants de Base (Design Memory)
 
-**Overlay:**
-- Modal - Modale interactive
+### Layout
+- **Container**: Conteneur principal avec padding et max-width
+- **Grid**: Système de grille responsive
+- **Card**: Carte avec bordure et ombre
 
-## 🔄 Workflow de Génération
+### Form
+- **Input**: Champ de saisie texte
+- **Select**: Liste déroulante
+- **Button**: Bouton d'action
 
-1. **Analyse du Pitch** - Extraction des features, entités, actions et rôles
-2. **Génération UX** - Création des pages et composants nécessaires
-3. **Recherche Design Memory** - Vérification des composants existants
-4. **Génération de Code** - Création des composants React et CSS
-5. **Génération Storybook** - Création des stories et configuration
-6. **Enregistrement** - Sauvegarde dans la Design Memory pour réutilisation
+### Display
+- **Calendar**: Calendrier interactif
+- **Table**: Tableau de données
+- **Notification**: Notification toast
+- **Badge**: Badge d'information
 
-## 📊 Exemple de Transformation
+### Overlay
+- **Modal**: Modale interactive
 
-**Pitch:** "Application de gestion de réservations de salles avec calendrier, filtres, notifications et dashboard admin"
+## 🎨 Exemple de Pitch
 
-**Analyse détecte:**
-- Features: calendar, filters, notifications, dashboard, booking, admin
-- Entities: room, event
-- Actions: create, edit, view
-- Roles: admin, user
+```
+"Application de gestion de réservations de salles avec calendrier, filtres, notifications et dashboard admin"
+```
 
-**Pages générées:**
-- Dashboard (/dashboard)
-- Calendrier (/calendar)
-- Liste (/list)
-- Admin Panel (/admin)
-- Notifications (/notifications)
+**Résultat:**
+- Pages générées: Dashboard, Calendrier, Liste, Admin Panel, Notifications
+- Composants nécessaires: Container, Grid, Card, Button, Input, Select, Calendar, Table, Notification, Badge, Modal
+- Storybook complet avec stories pour chaque composant
 
-**Composants générés:**
-- Container, Grid, Card, Button, Input, Select, Calendar, Table, Notification, Badge, Modal
+## 🔄 Architecture Reuse-First
 
-## 🎨 Storybook Généré
+1. **Analyse du besoin**: Le système analyse les composants requis
+2. **Recherche dans Design Memory**: Vérifie si le composant existe déjà
+3. **Réutilisation**: Si existe, utilise le composant existant
+4. **Création**: Sinon, génère un nouveau composant
+5. **Enregistrement**: Le nouveau composant est ajouté à la Design Memory
 
-Le Storybook généré inclut:
-- Configuration Vite + Storybook
-- Tous les composants avec leurs stories
-- Stories par défaut et avec tous les props
-- Stories spécifiques par composant
-- Styles globaux cohérents
-- README avec documentation
+## 📚 Technologies
+
+- **Backend**: Node.js + Express
+- **Frontend**: React
+- **Documentation**: Storybook 7.x
+- **Build**: Vite
+- **Langage**: JavaScript ES Modules
 
 ## 🧪 Tests
 
@@ -150,10 +157,6 @@ cd api
 npm test
 ```
 
-## 📝 Licence
+## 📄 License
 
-MIT - POC pour démonstration technique
-
-## 👨‍💻 Auteur
-
-StoryBook IA Team
+MIT
