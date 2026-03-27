@@ -8,14 +8,14 @@ import { generateStorybook } from './src/engine/storybookGenerator.js';
 
 async function demo() {
   console.log('\\n🎬 StoryBook IA - Démonstration\\n');
-  console.log('=' .repeat(60));
+  console.log('='.repeat(60));
   
   // Pitch d'exemple
   const pitch = 'Application de gestion de réservations de salles avec calendrier, filtres, notifications et dashboard admin';
   
   console.log('\\n📝 PITCH ENTRÉE:');
   console.log(`"${pitch}"\\n`);
-  console.log('=' .repeat(60));
+  console.log('='.repeat(60));
   
   // Étape 1: Transformer le pitch en modèle UX
   console.log('\\n🔄 Étape 1: Transformation du pitch en modèle UX...\\n');
@@ -58,9 +58,9 @@ async function demo() {
   
   src/
     ├── components/
-    │   ├── ${components.map(c => `${c.name}.jsx`).join('\\n    │   ├── ')}
-    │   ├── ${components.map(c => `${c.name}.css`).join('\\n    │   ├── ')}
-    │   └── ${components.map(c => `${c.name}.stories.jsx`).join('\\n    │   └── ')}
+    │   ├── ${components.map(c => c.name + '.jsx').join('\\n    │   ├── ')}
+    │   ├── ${components.map(c => c.name + '.css').join('\\n    │   ├── ')}
+    │   └── ${components.map(c => c.name + '.stories.jsx').join('\\n    │   └── ')}
     ├── main.jsx      # Application d'exemple
     └── styles.css    # Styles globaux
   
@@ -75,7 +75,7 @@ async function demo() {
   console.log('  npm run dev');
   console.log('\\n  Le Storybook sera disponible sur http://localhost:6006\\n');
   
-  console.log('=' .repeat(60));
+  console.log('='.repeat(60));
   console.log('✅ Démonstration terminée!\\n');
 }
 
