@@ -1,0 +1,103 @@
+version: "3.9"
+
+services:
+  # API Backend
+  api:
+    image: registry.methodinfo.fr/storybook-ia-api:latest
+    build:
+      context: ..
+      dockerfile: api/Dockerfile
+    networks:
+      - proxy
+    environment:
+      - PORT=${API_PORT:-3001}
+      # - MONGODB_URI=${MONGODB_URI}
+      # - DATABASE_URL=${DATABASE_URL}
+      # - MINIO_ENDPOINT=${MINIO_ENDPOINT}
+      # - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      # - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        # Activer Traefik
+        - "traefik.enable=true"
+        
+        # Définir le port du service
+        - "traefik.http.services.storybook-ia-api.loadbalancer.server.port=3001"
+        
+        # Router HTTPS (principal) - API avec path prefix
+        - "traefik.http.routers.storybook-ia-api.rule=Host(`${TRAEFIK_DOMAIN}`) && PathPrefix(`/api`)"
+        - "traefik.http.middlewares.storybook-ia-api-stripprefix.stripprefix.prefixes=/api"
+        - "traefik.http.routers.storybook-ia-api.entrypoints=websecure"
+        - "traefik.http.routers.storybook-ia-api.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.storybook-ia-api.middlewares=global@file,storybook-ia-api-stripprefix"
+        - "traefik.http.routers.storybook-ia-api.service=storybook-ia-api"
+        - "traefik.http.routers.storybook-ia-api.priority=100"
+        
+        # Router HTTP (redirige vers HTTPS)
+        - "traefik.http.routers.storybook-ia-api-http.rule=Host(`${TRAEFIK_DOMAIN}`) && PathPrefix(`/api`)"
+        - "traefik.http.routers.storybook-ia-api-http.entrypoints=web"
+        - "traefik.http.routers.storybook-ia-api-http.middlewares=redirect-to-https@file"
+        - "traefik.http.routers.storybook-ia-api-http.service=noop@internal"
+      placement:
+        constraints:
+          - node.labels.gpu != true
+
+  # Frontend
+  frontend:
+    image: registry.methodinfo.fr/storybook-ia-frontend:latest
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+    networks:
+      - proxy
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        # Activer Traefik
+        - "traefik.enable=true"
+        
+        # Définir le port du service
+        - "traefik.http.services.storybook-ia-frontend.loadbalancer.server.port=80"
+        
+        # Router HTTPS (principal) - Frontend principal
+        - "traefik.http.routers.storybook-ia-frontend.rule=Host(`${TRAEFIK_DOMAIN}`)"
+        - "traefik.http.routers.storybook-ia-frontend.entrypoints=websecure"
+        - "traefik.http.routers.storybook-ia-frontend.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.storybook-ia-frontend.middlewares=global@file"
+        - "traefik.http.routers.storybook-ia-frontend.service=storybook-ia-frontend"
+        - "traefik.http.routers.storybook-ia-frontend.priority=1"
+        
+        # Router HTTP (redirige vers HTTPS)
+        - "traefik.http.routers.storybook-ia-frontend-http.rule=Host(`${TRAEFIK_DOMAIN}`)"
+        - "traefik.http.routers.storybook-ia-frontend-http.entrypoints=web"
+        - "traefik.http.routers.storybook-ia-frontend-http.middlewares=redirect-to-https@file"
+        - "traefik.http.routers.storybook-ia-frontend-http.service=noop@internal"
+      placement:
+        constraints:
+          - node.labels.gpu != true
+
+  # Test service - pour les tests CI/CD (cible 'test' du docker-compose.swarm.yml)
+  test:
+    image: registry.methodinfo.fr/storybook-ia-api:test
+    build:
+      context: ..
+      dockerfile: api/Dockerfile
+      target: test
+    command: ["npm", "test"]
+    networks:
+      - proxy
+    deploy:
+      replicas: 0  # Désactivé par défaut, activé uniquement pour les tests
+
+networks:
+  proxy:
+    external: true
