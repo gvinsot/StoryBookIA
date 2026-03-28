@@ -51,8 +51,8 @@ services:
   frontend:
     image: registry.methodinfo.fr/storybook-ia-frontend:latest
     build:
-      context: ..
-      dockerfile: frontend/Dockerfile
+      context: ../frontend
+      dockerfile: Dockerfile
     networks:
       - proxy
     deploy:
@@ -73,7 +73,7 @@ services:
         - "traefik.http.routers.storybook-ia-frontend.entrypoints=websecure"
         - "traefik.http.routers.storybook-ia-frontend.tls.certresolver=letsencrypt"
         - "traefik.http.routers.storybook-ia-frontend.middlewares=global@file"
-        - "traefik.http.routers.storybook-ia-frontend.service=storybook-ia-frontend"
+        - "traefik.http.services.storybook-ia-frontend.service=storybook-ia-frontend"
         - "traefik.http.routers.storybook-ia-frontend.priority=1"
         
         # Router HTTP (redirige vers HTTPS)
