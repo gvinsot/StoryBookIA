@@ -44,6 +44,33 @@ router.post('/transform', async (req, res) => {
     await fs.writeJson(path.join(projectPath, 'components.json'), components, { spaces: 2 });
     await fs.writeJson(path.join(projectPath, 'storybook.json'), storybookData, { spaces: 2 });
     
+    // Étape 5: Enregistrer dans l'historique
+    const historyPath = path.join(__dirname, '../../generated-projects', 'history.json');
+    await fs.ensureDir(path.dirname(historyPath));
+    
+    let history = [];
+    try {
+      if (await fs.pathExists(historyPath)) {
+        history = await fs.readJson(historyPath);
+      }
+    } catch {
+      history = [];
+    }
+    
+    const newEntry = {
+      id: uuidv4(),
+      projectId,
+      projectName: uxModel.name || 'Project',
+      componentCount: components.length,
+      description: pitch,
+      createdAt: new Date().toISOString(),
+      status: 'completed'
+    };
+    
+    history.unshift(newEntry);
+    const trimmedHistory = history.slice(0, 10);
+    await fs.writeJson(historyPath, trimmedHistory, { spaces: 2 });
+    
     console.log('✅ Project generated:', projectId);
     
     res.json({

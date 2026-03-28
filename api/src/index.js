@@ -6,6 +6,8 @@ import { fileURLToPath } from 'url';
 import { pitchToUXRouter } from './routes/pitchToUX.js';
 import { componentRouter } from './routes/components.js';
 import { storybookRouter } from './routes/storybook.js';
+import { historyRouter } from './routes/history.js';
+import { downloadRouter } from './routes/download.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,6 +24,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/pitch', pitchToUXRouter);
 app.use('/api/components', componentRouter);
 app.use('/api/storybook', storybookRouter);
+app.use('/api/history', historyRouter);
+app.use('/api/download', downloadRouter);
 
 // Health check
 app.get('/health', (req, res) => {

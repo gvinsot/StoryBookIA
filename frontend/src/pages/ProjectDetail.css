@@ -1,0 +1,247 @@
+.project-detail {
+  animation: fadeIn 0.5s ease;
+}
+
+.project-detail.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: white;
+}
+
+.project-detail.error {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.project-detail.error h2 {
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.project-detail.error .btn {
+  display: inline-block;
+}
+
+.back-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: inline-block;
+  transition: opacity 0.3s ease;
+}
+
+.back-link:hover {
+  opacity: 0.8;
+}
+
+.project-header {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.project-header h1 {
+  color: #1a202c;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-description {
+  color: #4a5568;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.project-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.stat-label {
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+.project-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.project-section h2 {
+  color: #1a202c;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f7fafc;
+  border-radius: 8px;
+}
+
+.feature-icon {
+  color: #48bb78;
+  font-weight: bold;
+}
+
+.pages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.page-card {
+  background: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.page-card:hover {
+  transform: translateY(-5px);
+}
+
+.page-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.page-card h3 {
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.page-card p {
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+.components-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.component-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.component-item:hover {
+  background: #edf2f7;
+}
+
+.component-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.component-icon {
+  font-size: 1.25rem;
+}
+
+.component-type {
+  color: #718096;
+  font-size: 0.875rem;
+  background: #e2e8f0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}
+
+.project-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+}
+
+.project-actions .btn {
+  min-width: 250px;
+}
+
+@media (max-width: 768px) {
+  .project-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .project-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .components-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .project-actions {
+    flex-direction: column;
+  }
+  
+  .project-actions .btn {
+    min-width: 100%;
+  }
+}
