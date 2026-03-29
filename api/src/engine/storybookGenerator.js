@@ -282,7 +282,8 @@ MIT
  */
 export async function generateStorybook(uxModel, components) {
   const projectId = uxModel.id;
-  const storybookPath = path.join(__dirname, '../../storybook', projectId);
+  // FIX: Use generated-projects instead of storybook to match the API routes
+  const storybookPath = path.join(__dirname, '../../generated-projects', projectId);
   
   console.log('📚 Generating Storybook...');
   
@@ -385,7 +386,7 @@ export async function generateStorybook(uxModel, components) {
   return {
     projectId,
     path: storybookPath,
-    url: `/storybook/${projectId}`,
+    url: `/generated-projects/${projectId}`,
     components: componentData,
     componentCount: components.length
   };

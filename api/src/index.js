@@ -33,7 +33,8 @@ app.get('/health', (req, res) => {
 });
 
 // Serve static files for generated storybook
-app.use('/storybook', express.static(path.join(__dirname, '../../storybook')));
+// FIX: Changed from ../../storybook to ../../generated-projects to match the generator
+app.use('/storybook', express.static(path.join(__dirname, '../../generated-projects')));
 
 app.listen(PORT, () => {
   console.log(`🚀 StoryBook IA Backend running on port ${PORT}`);

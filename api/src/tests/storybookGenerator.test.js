@@ -26,8 +26,8 @@ describe('Storybook Generator', () => {
     const components = generateComponents(uxModel);
     const result = await generateStorybook(uxModel, components);
     
-    // Utiliser le chemin relatif au projet
-    const storybookPath = path.join(__dirname, '../../storybook', result.projectId);
+    // FIX: Use generated-projects instead of storybook to match the generator
+    const storybookPath = path.join(__dirname, '../../generated-projects', result.projectId);
     expect(await fs.pathExists(path.join(storybookPath, 'package.json'))).toBe(true);
     expect(await fs.pathExists(path.join(storybookPath, 'index.html'))).toBe(true);
   });
