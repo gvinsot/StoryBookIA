@@ -2,7 +2,6 @@ services:
   # API Backend
   api:
     image: registry.methodinfo.fr/storybook-ia-api:latest
-    platform: linux/amd64
     build:
       context: ../api
       dockerfile: Dockerfile
@@ -49,7 +48,6 @@ services:
   # Frontend
   frontend:
     image: registry.methodinfo.fr/storybook-ia-frontend:latest
-    platform: linux/amd64
     build:
       context: ../frontend
       dockerfile: Dockerfile
