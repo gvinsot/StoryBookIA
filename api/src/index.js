@@ -21,11 +21,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
+// Note: In production, Traefik strips the /api prefix before forwarding.
+// The Vite dev proxy forwards /api/* as-is, so we mount at both paths.
 app.use('/api/pitch', pitchToUXRouter);
 app.use('/api/components', componentRouter);
 app.use('/api/storybook', storybookRouter);
 app.use('/api/history', historyRouter);
 app.use('/api/download', downloadRouter);
+app.use('/pitch', pitchToUXRouter);
+app.use('/components', componentRouter);
+app.use('/storybook', storybookRouter);
+app.use('/history', historyRouter);
+app.use('/download', downloadRouter);
 
 // Health check
 app.get('/health', (req, res) => {
