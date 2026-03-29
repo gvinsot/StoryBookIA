@@ -16,7 +16,8 @@ const router = Router();
 router.get('/:projectId', async (req, res) => {
   try {
     const { projectId } = req.params;
-    const storybookPath = path.join(__dirname, '../../storybook', projectId);
+    // FIX: Use generated-projects instead of storybook to match the API routes
+    const storybookPath = path.join(__dirname, '../../generated-projects', projectId);
     
     if (!(await fs.pathExists(storybookPath))) {
       return res.status(404).json({ error: 'Storybook not found' });
