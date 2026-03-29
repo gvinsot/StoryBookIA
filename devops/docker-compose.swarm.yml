@@ -40,7 +40,7 @@ services:
         - "traefik.http.routers.storybook-ia-api-http.rule=Host(`storybook.pulsarteam.io`) && PathPrefix(`/api`)"
         - "traefik.http.routers.storybook-ia-api-http.entrypoints=web"
         - "traefik.http.routers.storybook-ia-api-http.middlewares=redirect-to-https@file"
-        - "traefik.http.routers.storybook-ia-api-http.service=noop@internal"
+        - "traefik.http.routers.storybook-ia-api-http.service=storybook-ia-api"
       placement:
         constraints:
           - node.labels.gpu == none
@@ -71,14 +71,14 @@ services:
         - "traefik.http.routers.storybook-ia-frontend.entrypoints=websecure"
         - "traefik.http.routers.storybook-ia-frontend.tls.certresolver=letsencrypt"
         - "traefik.http.routers.storybook-ia-frontend.middlewares=global@file"
-        - "traefik.http.services.storybook-ia-frontend.service=storybook-ia-frontend"
+        - "traefik.http.routers.storybook-ia-frontend.service=storybook-ia-frontend"
         - "traefik.http.routers.storybook-ia-frontend.priority=1"
         
         # Router HTTP (redirige vers HTTPS)
         - "traefik.http.routers.storybook-ia-frontend-http.rule=Host(`storybook.pulsarteam.io`)"
         - "traefik.http.routers.storybook-ia-frontend-http.entrypoints=web"
         - "traefik.http.routers.storybook-ia-frontend-http.middlewares=redirect-to-https@file"
-        - "traefik.http.routers.storybook-ia-frontend-http.service=noop@internal"
+        - "traefik.http.routers.storybook-ia-frontend-http.service=storybook-ia-frontend"
       placement:
         constraints:
           - node.labels.gpu == none
