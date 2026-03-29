@@ -100,5 +100,4 @@ services:
 
 networks:
   proxy:
-    external:
-      name: privatenetwork_proxy
+    driver: overlay
