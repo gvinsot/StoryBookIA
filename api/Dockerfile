@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM --platform=linux/amd64 node:18-alpine AS builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN npm install --only=production
 COPY . .
 
 # Test stage
-FROM node:18-alpine AS test
+FROM --platform=linux/amd64 node:18-alpine AS test
 
 WORKDIR /app
 
@@ -27,7 +27,7 @@ RUN npm install
 COPY . .
 
 # Production stage
-FROM node:18-alpine
+FROM --platform=linux/amd64 node:18-alpine
 
 WORKDIR /app
 
