@@ -35,10 +35,14 @@ WORKDIR /app
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001
 
-# Copy built application
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/src ./src
+# Copy package files first (for npm install)
 COPY --from=builder /app/package*.json ./
+
+# Copy node_modules from builder
+COPY --from=builder /app/node_modules ./node_modules
+
+# Copy source code
+COPY --from=builder /app/src ./src
 
 # Set ownership
 RUN chown -R nodejs:nodejs /app

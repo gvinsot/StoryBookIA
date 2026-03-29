@@ -5,8 +5,8 @@ services:
   api:
     image: registry.methodinfo.fr/storybook-ia-api:latest
     build:
-      context: ..
-      dockerfile: api/Dockerfile
+      context: ../api
+      dockerfile: Dockerfile
     networks:
       - proxy
     environment:
@@ -89,8 +89,8 @@ services:
   test:
     image: registry.methodinfo.fr/storybook-ia-api:test
     build:
-      context: ..
-      dockerfile: api/Dockerfile
+      context: ../api
+      dockerfile: Dockerfile
       target: test
     command: ["npm", "test"]
     networks:
