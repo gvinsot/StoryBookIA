@@ -98,7 +98,7 @@ services:
       placement:
         constraints:
           - node.labels.gpu ==none
-          
+
 networks:
   proxy:
     external: true
