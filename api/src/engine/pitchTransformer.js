@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import crypto from 'crypto';
 
 /**
  * Moteur de transformation Pitch → Modèle UX

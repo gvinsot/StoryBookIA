@@ -18,14 +18,15 @@ describe('Component Generator', () => {
     
     const buttonComponent = components.find(c => c.name === 'Button');
     expect(buttonComponent).toBeTruthy();
-    expect(buttonComponent.generated).toBe(true);
+    expect(buttonComponent.reused).toBe(true);
   });
 
   test('should generate valid React code', () => {
-    const uxModel = transformPitchToUX('Application avec input');
+    const uxModel = transformPitchToUX('Application avec input et filtres');
     const components = generateComponents(uxModel);
     
     const inputComponent = components.find(c => c.name === 'Input');
+    expect(inputComponent).toBeTruthy();
     expect(inputComponent.code).toContain('import React');
     expect(inputComponent.code).toContain('export const Input');
   });

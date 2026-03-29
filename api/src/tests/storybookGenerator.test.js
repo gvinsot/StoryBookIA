@@ -14,9 +14,11 @@ describe('Storybook Generator', () => {
     const components = generateComponents(uxModel);
     const result = await generateStorybook(uxModel, components);
     
-    expect(result.projectName).toBeTruthy();
+    expect(result.projectId).toBeTruthy();
     expect(result.components.length).toBeGreaterThan(0);
     expect(result.componentCount).toBe(components.length);
+    expect(result.path).toBeTruthy();
+    expect(result.url).toBeTruthy();
   });
 
   test('should create storybook files', async () => {
@@ -25,7 +27,7 @@ describe('Storybook Generator', () => {
     const result = await generateStorybook(uxModel, components);
     
     // Utiliser le chemin relatif au projet
-    const storybookPath = path.join(__dirname, '../../storybook', result.projectName);
+    const storybookPath = path.join(__dirname, '../../storybook', result.projectId);
     expect(await fs.pathExists(path.join(storybookPath, 'package.json'))).toBe(true);
     expect(await fs.pathExists(path.join(storybookPath, 'index.html'))).toBe(true);
   });

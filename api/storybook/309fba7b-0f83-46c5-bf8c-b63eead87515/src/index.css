@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  color: #374151;
+  background: #f9fafb;
+}
+
+#root {
+  min-height: 100vh;
+  padding: 24px;
+}
