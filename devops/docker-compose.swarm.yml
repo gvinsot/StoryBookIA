@@ -81,7 +81,7 @@ services:
         - "traefik.http.routers.storybook-ia-frontend-http.service=noop@internal"
       placement:
         constraints:
-          - node.labels.gpu ==none
+          - node.labels.gpu == none
 
   # Test service - pour les tests CI/CD (cible 'test' du docker-compose.swarm.yml)
   test:
@@ -97,7 +97,7 @@ services:
       replicas: 0  # Désactivé par défaut, activé uniquement pour les tests
       placement:
         constraints:
-          - node.labels.gpu ==none
+          - node.labels.gpu == none
 
 networks:
   proxy:
