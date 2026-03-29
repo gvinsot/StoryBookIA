@@ -43,7 +43,7 @@ services:
         - "traefik.http.routers.storybook-ia-api-http.service=noop@internal"
       placement:
         constraints:
-          - node.labels.gpu != true
+          - node.labels.gpu == none
 
   # Frontend
   frontend:
@@ -81,7 +81,7 @@ services:
         - "traefik.http.routers.storybook-ia-frontend-http.service=noop@internal"
       placement:
         constraints:
-          - node.labels.gpu != true
+          - node.labels.gpu ==none
 
   # Test service - pour les tests CI/CD (cible 'test' du docker-compose.swarm.yml)
   test:
@@ -95,7 +95,10 @@ services:
       - proxy
     deploy:
       replicas: 0  # Désactivé par défaut, activé uniquement pour les tests
-
+      placement:
+        constraints:
+          - node.labels.gpu ==none
+          
 networks:
   proxy:
     external: true
