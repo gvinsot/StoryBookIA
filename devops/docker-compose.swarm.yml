@@ -100,4 +100,5 @@ services:
 
 networks:
   proxy:
-    external: true
+    external:
+      name: privatenetwork_proxy
