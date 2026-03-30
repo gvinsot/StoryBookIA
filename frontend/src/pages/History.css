@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   min-height: 400px;
-  color: #ffffff;
+  color: white;
 }
 
 .spinner-large {
@@ -16,7 +16,7 @@
   height: 50px;
   border: 5px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  border-top-color: #ffffff;
+  border-top-color: white;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
 }
@@ -32,14 +32,14 @@
 }
 
 .history-header h1 {
-  color: #ffffff;
+  color: white;
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .page-subtitle {
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.1rem;
 }
 
@@ -49,7 +49,6 @@
   background: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .empty-icon {
@@ -58,12 +57,12 @@
 }
 
 .empty-state h2 {
-  color: #064e3b;
+  color: #1a202c;
   margin-bottom: 0.5rem;
 }
 
 .empty-state p {
-  color: #047857;
+  color: #718096;
   margin-bottom: 1.5rem;
 }
 
@@ -74,17 +73,16 @@
 }
 
 .history-item {
-  background: rgba(255, 255, 255, 0.95);
+  background: white;
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .history-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .history-item-header {
@@ -105,7 +103,7 @@
 }
 
 .history-item-title h3 {
-  color: #064e3b;
+  color: #1a202c;
   font-size: 1.25rem;
   margin: 0;
 }
@@ -126,34 +124,34 @@
 }
 
 .btn-sm.btn-primary {
-  background: #10b981;
-  color: #ffffff;
+  background: #667eea;
+  color: white;
 }
 
 .btn-sm.btn-primary:hover {
-  background: #059669;
+  background: #5a67d8;
 }
 
 .btn-sm.btn-secondary {
-  background: #d1fae5;
-  color: #064e3b;
+  background: #e2e8f0;
+  color: #4a5568;
 }
 
 .btn-sm.btn-secondary:hover {
-  background: #a7f3d0;
+  background: #cbd5e0;
 }
 
 .btn-sm.btn-danger {
-  background: #fca5a5;
-  color: #991b1b;
+  background: #fc8181;
+  color: white;
 }
 
 .btn-sm.btn-danger:hover {
-  background: #f87171;
+  background: #f56565;
 }
 
 .history-item-description {
-  color: #047857;
+  color: #4a5568;
   margin-bottom: 1rem;
   line-height: 1.5;
   font-style: italic;
@@ -169,9 +167,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #059669;
+  color: #718096;
   font-size: 0.875rem;
-  font-weight: 500;
 }
 
 .meta-icon {
@@ -187,18 +184,18 @@
 }
 
 .status.completed {
-  background: #d1fae5;
-  color: #065f46;
+  background: #c6f6d5;
+  color: #276749;
 }
 
 .status.processing {
-  background: #fef3c7;
-  color: #92400e;
+  background: #fefcbf;
+  color: #975a16;
 }
 
 .status.error {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: #fed7d7;
+  color: #c53030;
 }
 
 @media (max-width: 768px) {

@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   min-height: 400px;
-  color: #ffffff;
+  color: white;
 }
 
 .project-detail.error {
@@ -17,9 +17,8 @@
 }
 
 .project-detail.error h2 {
-  color: #ffffff;
+  color: white;
   margin-bottom: 1.5rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .project-detail.error .btn {
@@ -27,7 +26,7 @@
 }
 
 .back-link {
-  color: #ffffff;
+  color: white;
   text-decoration: none;
   font-weight: 600;
   margin-bottom: 1rem;
@@ -36,7 +35,7 @@
 }
 
 .back-link:hover {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 .project-header {
@@ -44,18 +43,17 @@
   padding: 2rem;
   border-radius: 16px;
   margin-bottom: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .project-header h1 {
-  color: #064e3b;
+  color: #1a202c;
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
 }
 
 .project-description {
-  color: #047857;
+  color: #4a5568;
   font-size: 1.1rem;
   line-height: 1.6;
 }
@@ -68,15 +66,14 @@
 }
 
 .stat-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: white;
   padding: 1.5rem;
   border-radius: 12px;
   display: flex;
   align-items: center;
   gap: 1rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .stat-card:hover {
@@ -95,29 +92,27 @@
 .stat-value {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #10b981;
+  color: #667eea;
 }
 
 .stat-label {
-  color: #059669;
+  color: #718096;
   font-size: 0.875rem;
-  font-weight: 500;
 }
 
 .project-section {
-  background: rgba(255, 255, 255, 0.95);
+  background: white;
   padding: 2rem;
   border-radius: 16px;
   margin-bottom: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .project-section h2 {
-  color: #064e3b;
+  color: #1a202c;
   margin-bottom: 1.5rem;
   font-size: 1.5rem;
-  border-bottom: 2px solid #a7f3d0;
+  border-bottom: 2px solid #e2e8f0;
   padding-bottom: 0.5rem;
 }
 
@@ -132,13 +127,12 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  background: #ecfdf5;
+  background: #f7fafc;
   border-radius: 8px;
-  border: 1px solid #a7f3d0;
 }
 
 .feature-icon {
-  color: #047857;
+  color: #48bb78;
   font-weight: bold;
 }
 
@@ -149,12 +143,11 @@
 }
 
 .page-card {
-  background: #ecfdf5;
+  background: #f7fafc;
   padding: 1.5rem;
   border-radius: 12px;
   text-align: center;
   transition: transform 0.3s ease;
-  border: 1px solid #a7f3d0;
 }
 
 .page-card:hover {
@@ -167,12 +160,12 @@
 }
 
 .page-card h3 {
-  color: #064e3b;
+  color: #1a202c;
   margin-bottom: 0.5rem;
 }
 
 .page-card p {
-  color: #047857;
+  color: #718096;
   font-size: 0.875rem;
 }
 
@@ -187,14 +180,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: #ecfdf5;
+  background: #f7fafc;
   border-radius: 8px;
   transition: background 0.3s ease;
-  border: 1px solid #a7f3d0;
 }
 
 .component-item:hover {
-  background: #d1fae5;
+  background: #edf2f7;
 }
 
 .component-name {
@@ -202,7 +194,7 @@
   align-items: center;
   gap: 0.5rem;
   font-weight: 600;
-  color: #064e3b;
+  color: #1a202c;
 }
 
 .component-icon {
@@ -210,12 +202,11 @@
 }
 
 .component-type {
-  color: #047857;
+  color: #718096;
   font-size: 0.875rem;
-  background: #d1fae5;
+  background: #e2e8f0;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
-  border: 1px solid #a7f3d0;
 }
 
 .project-actions {
@@ -227,7 +218,6 @@
   padding: 2rem;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .project-actions .btn {
