@@ -198,6 +198,20 @@ export const theme = {
     min: '44px',
     recommended: '48px',
   },
+  
+  // Icon sizing system
+  icon: {
+    // Base icon sizes (increased from 48px to 64px for better visibility)
+    xs: '24px',
+    sm: '32px',
+    md: '48px',
+    lg: '64px',
+    xl: '80px',
+    // Mobile minimum size for accessibility
+    mobileMin: '36px',
+    // Default icon size for feature cards and main UI
+    default: '64px',
+  },
 };
 
 // CSS Variables for use in stylesheets
@@ -341,6 +355,23 @@ export const cssVariables = `
   /* Touch targets */
   --touch-target-min: 44px;
   --touch-target-recommended: 48px;
+  
+  /* Icon Sizing System */
+  --icon-xs: 24px;
+  --icon-sm: 32px;
+  --icon-md: 48px;
+  --icon-lg: 64px;
+  --icon-xl: 80px;
+  --icon-mobile-min: 36px;
+  --icon-default: 64px;
+  
+  /* Icon Colors - Harmonized with theme */
+  --icon-primary: var(--primary-600);
+  --icon-secondary: var(--secondary-600);
+  --icon-success: var(--success-500);
+  --icon-warning: var(--warning-500);
+  --icon-error: var(--error-500);
+  --icon-muted: var(--neutral-400);
 }
 `;
 

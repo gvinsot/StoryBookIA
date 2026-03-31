@@ -1,6 +1,7 @@
 /**
  * Home Page Styles
  * Professional design system implementation
+ * Updated with harmonized icon sizing system
  */
 
 .home {
@@ -130,10 +131,39 @@
   box-shadow: var(--shadow-xl);
 }
 
+/* 
+ * Icon System - Harmonized and Responsive
+ * All icons use consistent sizing and styling
+ * Base size: 64px (increased from 48px for better visibility)
+ * Mobile minimum: 36px for accessibility
+ */
 .feature-icon {
-  font-size: var(--text-5xl);
-  margin-bottom: var(--space-md);
-  display: block;
+  /* Use CSS variable for consistent, reusable sizing */
+  font-size: var(--icon-default);
+  /* Ensure uniform size across all icons */
+  width: var(--icon-default);
+  height: var(--icon-default);
+  /* Center the icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-md);
+  /* Consistent emoji rendering */
+  line-height: 1;
+  /* Smooth transition for hover effects */
+  transition: transform var(--transition-fast);
+}
+
+/* Add subtle hover effect to icons */
+.feature-card:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+/* Ensure icons are not cut off */
+.feature-icon span {
+  display: inline-block;
+  max-width: 100%;
+  overflow: visible;
 }
 
 .feature-card h3 {
@@ -170,7 +200,10 @@
   font-size: var(--text-lg);
 }
 
-/* Responsive Design */
+/* 
+ * Responsive Design for Icons
+ * Ensures icons remain visible and properly sized on all devices
+ */
 @media (max-width: 768px) {
   .hero {
     padding: var(--space-xl) var(--space-sm);
@@ -193,6 +226,13 @@
   .features-grid {
     grid-template-columns: 1fr;
     gap: var(--space-md);
+  }
+  
+  /* Mobile icon sizing - minimum 36px for accessibility */
+  .feature-icon {
+    font-size: var(--icon-mobile-min);
+    width: var(--icon-mobile-min);
+    height: var(--icon-mobile-min);
   }
   
   .cta-section {
@@ -249,9 +289,16 @@
   }
 }
 
-/* Accessibility - Reduced Motion */
+/* 
+ * Accessibility - Reduced Motion
+ * Respects user preferences for reduced animations
+ */
 @media (prefers-reduced-motion: reduce) {
   .feature-card {
+    transition: none;
+  }
+  
+  .feature-icon {
     transition: none;
   }
   
