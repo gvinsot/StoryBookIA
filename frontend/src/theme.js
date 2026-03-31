@@ -37,10 +37,6 @@ export const theme = {
       300: '#d8b4fe',
       400: '#c084fc',
       500: '#a855f7',
-      600: '#9333ea',
-      700: '#7e22ce',
-      800: '#6b21a8',
-      900: '#581c87',
     },
     
     // Neutral/Gray scale
@@ -51,61 +47,28 @@ export const theme = {
       300: '#d1d5db',
       400: '#9ca3af',
       500: '#6b7280',
-      600: '#4b5563',
-      700: '#374151',
-      800: '#1f2937',
-      900: '#111827',
     },
     
-    // Semantic colors
+    // Success/Error/Warning colors
     success: {
       50: '#f0fdf4',
       100: '#dcfce7',
       500: '#22c55e',
-      600: '#16a34a',
-      700: '#15803d',
     },
     
     error: {
       50: '#fef2f2',
       100: '#fee2e2',
       500: '#ef4444',
-      600: '#dc2626',
-      700: '#b91c1c',
     },
     
     warning: {
       50: '#fffbeb',
       100: '#fef3c7',
       500: '#f59e0b',
-      600: '#d97706',
-      700: '#b45309',
-    },
-    
-    // Background colors
-    background: {
-      primary: '#f8fafc',
-      secondary: '#ffffff',
-      tertiary: '#f1f5f9',
-    },
-    
-    // Text colors (WCAG AA compliant)
-    text: {
-      primary: '#111827',
-      secondary: '#374151',
-      muted: '#6b7280',
-      inverse: '#ffffff',
-    },
-    
-    // Border colors
-    border: {
-      default: '#e5e7eb',
-      focus: '#3b82f6',
-      error: '#ef4444',
     },
   },
   
-  // Typography
   typography: {
     fontFamily: {
       primary: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
@@ -122,6 +85,8 @@ export const theme = {
       '3xl': '1.875rem',
       '4xl': '2.25rem',
       '5xl': '3rem',
+      '6xl': '4rem',
+      '7xl': '5rem',
     },
     
     fontWeight: {
@@ -138,7 +103,6 @@ export const theme = {
     },
   },
   
-  // Spacing
   spacing: {
     xs: '0.5rem',
     sm: '1rem',
@@ -146,9 +110,18 @@ export const theme = {
     lg: '2rem',
     xl: '3rem',
     '2xl': '4rem',
+    '3xl': '5rem',
   },
   
-  // Border radius
+  // Icon sizes (NEW - centralized icon sizing)
+  iconSizes: {
+    sm: '1.5rem',      // 24px
+    md: '2rem',        // 32px
+    lg: '3rem',        // 48px
+    xl: '4rem',        // 64px
+    '2xl': '5rem',     // 80px
+  },
+  
   borderRadius: {
     sm: '0.375rem',
     md: '0.5rem',
@@ -158,45 +131,31 @@ export const theme = {
     full: '9999px',
   },
   
-  // Shadows
   shadows: {
     sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
     md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
     lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
     xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-    inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
   },
   
-  // Transitions
   transitions: {
     fast: '150ms ease',
     normal: '300ms ease',
     slow: '500ms ease',
   },
   
-  // Z-index scale
   zIndex: {
     dropdown: '1000',
     sticky: '1100',
     fixed: '1200',
     modalBackdrop: '1300',
     modal: '1400',
-    tooltip: '1500',
   },
   
-  // Breakpoints for responsive design
   breakpoints: {
     sm: '640px',
     md: '768px',
     lg: '1024px',
-    xl: '1280px',
-    '2xl': '1536px',
-  },
-  
-  // Touch targets (minimum 44x44px for mobile accessibility)
-  touchTarget: {
-    min: '44px',
-    recommended: '48px',
   },
   
   // Icon sizing system
@@ -220,9 +179,6 @@ export const cssVariables = `
   /* Primary Colors */
   --primary-50: #eff6ff;
   --primary-100: #dbeafe;
-  --primary-200: #bfdbfe;
-  --primary-300: #93c5fd;
-  --primary-400: #60a5fa;
   --primary-500: #3b82f6;
   --primary-600: #2563eb;
   --primary-700: #1d4ed8;
@@ -232,9 +188,6 @@ export const cssVariables = `
   /* Secondary Colors */
   --secondary-50: #faf5ff;
   --secondary-100: #f3e8ff;
-  --secondary-200: #e9d5ff;
-  --secondary-300: #d8b4fe;
-  --secondary-400: #c084fc;
   --secondary-500: #a855f7;
   --secondary-600: #9333ea;
   --secondary-700: #7e22ce;
@@ -244,49 +197,20 @@ export const cssVariables = `
   /* Neutral/Gray */
   --neutral-50: #f9fafb;
   --neutral-100: #f3f4f6;
-  --neutral-200: #e5e7eb;
-  --neutral-300: #d1d5db;
-  --neutral-400: #9ca3af;
   --neutral-500: #6b7280;
-  --neutral-600: #4b5563;
-  --neutral-700: #374151;
-  --neutral-800: #1f2937;
-  --neutral-900: #111827;
+
+  /* Icon Sizes (NEW - centralized icon sizing) */
+  --icon-sm: 1.5rem;      /* 24px */
+  --icon-md: 2rem;       /* 32px */
+  --icon-lg: 3rem;       /* 48px */
+  --icon-xl: 4rem;       /* 64px */
+  --icon-2xl: 5rem;      /* 80px */
+  --icon-display: 6rem;  /* 96px */
   
-  /* Semantic Colors */
-  --success-50: #f0fdf4;
-  --success-100: #dcfce7;
-  --success-500: #22c55e;
-  --success-600: #16a34a;
-  --success-700: #15803d;
-  
-  --error-50: #fef2f2;
-  --error-100: #fee2e2;
-  --error-500: #ef4444;
-  --error-600: #dc2626;
-  --error-700: #b91c1c;
-  
-  --warning-50: #fffbeb;
-  --warning-100: #fef3c7;
-  --warning-500: #f59e0b;
-  --warning-600: #d97706;
-  --warning-700: #b45309;
-  
-  /* Background */
-  --bg-primary: #f8fafc;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #f1f5f9;
-  
-  /* Text */
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-muted: #6b7280;
-  --text-inverse: #ffffff;
-  
-  /* Borders */
-  --border-default: #e5e7eb;
-  --border-focus: #3b82f6;
-  --border-error: #ef4444;
+  /* Icon Container Sizes (for rounded background) */
+  --icon-container-sm: 4.5rem;   /* 72px */
+  --icon-container-md: 6rem;     /* 96px */
+  --icon-container-lg: 8rem;     /* 128px */
   
   /* Typography */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -302,6 +226,8 @@ export const cssVariables = `
   --text-3xl: 1.875rem;
   --text-4xl: 2.25rem;
   --text-5xl: 3rem;
+  --text-6xl: 4rem;
+  --text-7xl: 5rem;
   
   /* Font Weights */
   --font-normal: 400;
@@ -316,6 +242,7 @@ export const cssVariables = `
   --space-lg: 2rem;
   --space-xl: 3rem;
   --space-2xl: 4rem;
+  --space-3xl: 5rem;
   
   /* Border Radius */
   --radius-sm: 0.375rem;
@@ -343,14 +270,11 @@ export const cssVariables = `
   --z-fixed: 1200;
   --z-modal-backdrop: 1300;
   --z-modal: 1400;
-  --z-tooltip: 1500;
   
   /* Breakpoints */
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
   
   /* Touch targets */
   --touch-target-min: 44px;

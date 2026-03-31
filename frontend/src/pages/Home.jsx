@@ -25,22 +25,30 @@ function Home() {
         <h2 className="section-title">Comment ça marche ?</h2>
         <div className="features-grid">
           <div className="feature-card">
-            <div className="feature-icon">📝</div>
+            <div className="feature-icon-wrapper">
+              <span className="feature-icon">📝</span>
+            </div>
             <h3>1. Décrivez votre projet</h3>
             <p>Entrez un pitch simple décrivant votre application (ex: "Application de gestion de réservations")</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">🧠</div>
+            <div className="feature-icon-wrapper">
+              <span className="feature-icon">🧠</span>
+            </div>
             <h3>2. Analyse IA</h3>
             <p>Notre IA analyse votre description et identifie les fonctionnalités, pages et composants nécessaires</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">🎨</div>
+            <div className="feature-icon-wrapper">
+              <span className="feature-icon">🎨</span>
+            </div>
             <h3>3. Génération automatique</h3>
             <p>Le Storybook est généré avec tous les composants React, CSS et stories configurés</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">📦</div>
+            <div className="feature-icon-wrapper">
+              <span className="feature-icon">📦</span>
+            </div>
             <h3>4. Téléchargement</h3>
             <p>Téléchargez le projet complet et commencez à développer immédiatement</p>
           </div>
