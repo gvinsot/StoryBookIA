@@ -65,13 +65,13 @@
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: white;
+  color: #1a202c;
+  border: 2px solid white;
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: #f7fafc;
   transform: translateY(-2px);
 }
 
