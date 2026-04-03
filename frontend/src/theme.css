@@ -91,6 +91,8 @@
   --text-3xl: 1.875rem;
   --text-4xl: 2.25rem;
   --text-5xl: 3rem;
+  --text-6xl: 4rem;
+  --text-7xl: 5rem;
   
   /* Font Weights */
   --font-normal: 400;
@@ -110,6 +112,7 @@
   --space-lg: 2rem;
   --space-xl: 3rem;
   --space-2xl: 4rem;
+  --space-3xl: 5rem;
   
   /* Border Radius */
   --radius-sm: 0.375rem;
@@ -149,4 +152,19 @@
   /* Touch targets (WCAG compliant minimum 44x44px) */
   --touch-target-min: 44px;
   --touch-target-recommended: 48px;
+  
+  /* Icon Sizing System */
+  --icon-xs: 24px;
+  --icon-sm: 32px;
+  --icon-md: 48px;
+  --icon-lg: 64px;
+  --icon-xl: 80px;
+  --icon-2xl: 96px;
+  --icon-mobile-min: 36px;
+  --icon-default: 64px;
+  
+  /* Icon Container Sizes (for rounded background) */
+  --icon-container-sm: 4.5rem;   /* 72px */
+  --icon-container-md: 6rem;     /* 96px */
+  --icon-container-lg: 8rem;     /* 128px */
 }
