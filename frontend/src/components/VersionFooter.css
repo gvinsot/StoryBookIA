@@ -1,0 +1,26 @@
+.version-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-default);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.version-separator {
+  color: var(--neutral-300);
+}
+
+.version-commit {
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  .version-footer {
+    padding: var(--space-xs) var(--space-sm);
+  }
+}

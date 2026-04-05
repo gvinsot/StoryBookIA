@@ -3,6 +3,12 @@
  * Professional design system implementation
  */
 
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .navbar {
   background: var(--bg-secondary);
   padding: var(--space-sm) var(--space-lg);

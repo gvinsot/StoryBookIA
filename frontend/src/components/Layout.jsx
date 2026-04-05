@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import VersionFooter from './VersionFooter';
 import './Layout.css';
 
 function Layout({ children }) {
@@ -45,6 +46,7 @@ function Layout({ children }) {
       <main className="main-content">
         {children}
       </main>
+      <VersionFooter />
     </div>
   );
 }
