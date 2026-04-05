@@ -1,9 +1,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { execSync } from 'child_process';
-import { readFileSync } from 'fs';
 
-const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+let gitTag = '0.0.0';
+try {
+  gitTag = execSync('git describe --tags --abbrev=0').toString().trim();
+} catch (_) {}
+
 let gitCommit = 'unknown';
 try {
   gitCommit = execSync('git rev-parse --short=7 HEAD').toString().trim();
@@ -12,7 +15,7 @@ try {
 export default defineConfig({
   plugins: [react()],
   define: {
-    __APP_VERSION__: JSON.stringify(pkg.version),
+    __APP_VERSION__: JSON.stringify(gitTag),
     __GIT_COMMIT__: JSON.stringify(gitCommit),
   },
   server: {
