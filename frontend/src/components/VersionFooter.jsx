@@ -2,7 +2,7 @@ import React from 'react';
 import './VersionFooter.css';
 
 function VersionFooter() {
-  const version = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : 'v0.0.0';
+  const version = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : 'dev';
   const commit = typeof __GIT_COMMIT__ !== 'undefined' ? __GIT_COMMIT__ : 'unknown';
 
   return (

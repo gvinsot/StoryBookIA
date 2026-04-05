@@ -1,6 +1,12 @@
 # Build stage
 FROM --platform=linux/amd64 node:25-alpine AS builder
 
+ARG APP_VERSION=dev
+ARG GIT_COMMIT=unknown
+
+ENV APP_VERSION=${APP_VERSION}
+ENV GIT_COMMIT=${GIT_COMMIT}
+
 WORKDIR /app
 
 # Copy package files

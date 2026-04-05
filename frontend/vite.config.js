@@ -2,21 +2,27 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { execSync } from 'child_process';
 
-let gitTag = '0.0.0';
-try {
-  gitTag = execSync('git describe --tags --abbrev=0').toString().trim();
-} catch (_) {}
+function getGitTag() {
+  try {
+    return execSync('git describe --tags --abbrev=0').toString().trim();
+  } catch (_) {
+    return process.env.APP_VERSION || 'dev';
+  }
+}
 
-let gitCommit = 'unknown';
-try {
-  gitCommit = execSync('git rev-parse --short=7 HEAD').toString().trim();
-} catch (_) {}
+function getGitCommit() {
+  try {
+    return execSync('git rev-parse --short=7 HEAD').toString().trim();
+  } catch (_) {
+    return process.env.GIT_COMMIT || 'unknown';
+  }
+}
 
 export default defineConfig({
   plugins: [react()],
   define: {
-    __APP_VERSION__: JSON.stringify(gitTag),
-    __GIT_COMMIT__: JSON.stringify(gitCommit),
+    __APP_VERSION__: JSON.stringify(getGitTag()),
+    __GIT_COMMIT__: JSON.stringify(getGitCommit()),
   },
   server: {
     port: 3000,
