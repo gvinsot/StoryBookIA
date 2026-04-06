@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Generate from './pages/Generate';
 import History from './pages/History';
 import ProjectDetail from './pages/ProjectDetail';
+import Tenants from './pages/Tenants';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/generate" element={<Generate />} />
         <Route path="/history" element={<History />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
+        <Route path="/tenants" element={<Tenants />} />
       </Routes>
     </Layout>
   );

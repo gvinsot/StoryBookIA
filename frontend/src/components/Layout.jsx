@@ -41,6 +41,12 @@ function Layout({ children }) {
           >
             Historique
           </Link>
+          <Link 
+            to="/tenants" 
+            className={`nav-link ${isActive('/tenants') ? 'active' : ''}`}
+          >
+            Locataires
+          </Link>
         </div>
       </nav>
       <main className="main-content">
