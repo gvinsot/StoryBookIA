@@ -45,7 +45,7 @@ function Layout({ children }) {
             to="/tenants" 
             className={`nav-link ${isActive('/tenants') ? 'active' : ''}`}
           >
-            Exemples
+            Locataires
           </Link>
         </div>
       </nav>
