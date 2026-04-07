@@ -180,7 +180,7 @@ function Tenants() {
             <thead>
               <tr>
                 <th>Locataire</th>
-                <th>Bien</th>
+                <th>Propriété</th>
                 <th>Contact</th>
                 <th>Contrat</th>
                 <th>Loyer</th>
@@ -276,7 +276,7 @@ function Tenants() {
                   <input type="tel" className="form-input" placeholder="06 12 34 56 78" required />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Bien *</label>
+                  <label className="form-label">Propriété *</label>
                   <input type="text" className="form-input" placeholder="Appartement T3 - 75011 Paris" required />
                 </div>
                 <div className="form-row">
