@@ -88,7 +88,7 @@ function Tenants() {
   };
 
   const handleDeleteTenant = (id) => {
-    if (window.confirm('Êtes-vous sûr de vouloir supprimer ce locataire ?')) {
+    if (window.confirm('Êtes-vous sûr de vouloir supprimer cet exemple ?')) {
       setTenants(tenants.filter(t => t.id !== id));
     }
   };
@@ -103,12 +103,12 @@ function Tenants() {
       {/* Page Header */}
       <div className="page-header">
         <div className="page-header-content">
-          <h1 className="page-title">Gestion des Locataires</h1>
-          <p className="page-subtitle">Consultez et gérez la liste de vos locataires</p>
+          <h1 className="page-title">Gestion des Exemples</h1>
+          <p className="page-subtitle">Consultez et gérez la liste de vos exemples</p>
         </div>
         <button className="btn btn-primary" onClick={handleAddTenant}>
           <span className="btn-icon">+</span>
-          Ajouter un locataire
+          Ajouter un exemple
         </button>
       </div>
 
@@ -120,7 +120,7 @@ function Tenants() {
             <input
               type="text"
               className="search-input"
-              placeholder="Rechercher un locataire..."
+              placeholder="Rechercher un exemple..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -147,7 +147,7 @@ function Tenants() {
           <div className="stat-card-icon">👥</div>
           <div className="stat-card-content">
             <span className="stat-card-value">{tenants.length}</span>
-            <span className="stat-card-label">Total locataires</span>
+            <span className="stat-card-label">Total exemples</span>
           </div>
         </div>
         <div className="stat-card">
@@ -179,7 +179,7 @@ function Tenants() {
           <table className="tenants-table">
             <thead>
               <tr>
-                <th>Locataire</th>
+                <th>Exemple</th>
                 <th>Propriété</th>
                 <th>Contact</th>
                 <th>Contrat</th>
@@ -242,7 +242,7 @@ function Tenants() {
                   <td colSpan="7" className="empty-state">
                     <div className="empty-state-content">
                       <span className="empty-state-icon">📋</span>
-                      <p className="empty-state-text">Aucun locataire trouvé</p>
+                      <p className="empty-state-text">Aucun exemple trouvé</p>
                       <p className="empty-state-subtext">Essayez de modifier vos filtres de recherche</p>
                     </div>
                   </td>
@@ -258,7 +258,7 @@ function Tenants() {
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2 className="modal-title">{editingTenant ? 'Modifier le locataire' : 'Ajouter un locataire'}</h2>
+              <h2 className="modal-title">{editingTenant ? 'Modifier l\'exemple' : 'Ajouter un exemple'}</h2>
               <button className="modal-close" onClick={handleCloseModal}>✕</button>
             </div>
             <div className="modal-body">
