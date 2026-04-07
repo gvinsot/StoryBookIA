@@ -128,6 +128,11 @@ function Home() {
           </Link>
         </div>
       </section>
+
+      {/* Footer Section */}
+      <footer className="footer">
+        <p className="footer-copyright">Copyright © Pulsarteam 2025</p>
+      </footer>
     </div>
   );
 }

@@ -402,4 +402,27 @@
     width: 100%;
     max-width: 280px;
   }
+}/* ---------- Footer Section ---------- */
+.footer {
+  padding: 24px;
+  background: var(--bg-tertiary);
+  border-top: 1px solid var(--border-primary);
+  text-align: center;
+}
+
+.footer-copyright {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 20px 16px;
+  }
+
+  .footer-copyright {
+    font-size: 0.8rem;
+  }
 }
