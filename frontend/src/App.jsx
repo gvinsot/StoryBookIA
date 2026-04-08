@@ -6,6 +6,8 @@ import Generate from './pages/Generate';
 import History from './pages/History';
 import ProjectDetail from './pages/ProjectDetail';
 import Tenants from './pages/Tenants';
+import KpiDashboard from './pages/KpiDashboard';
+import PropertySearch from './pages/PropertySearch';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/history" element={<History />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
         <Route path="/tenants" element={<Tenants />} />
+        <Route path="/kpi" element={<KpiDashboard />} />
+        <Route path="/search" element={<PropertySearch />} />
       </Routes>
     </Layout>
   );

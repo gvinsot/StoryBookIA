@@ -1,0 +1,134 @@
+/**
+ * KpiCard Component Styles
+ * Reusable KPI metric card for dashboard visualizations
+ */
+
+.kpi-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-default);
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.kpi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.kpi-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.kpi-card-icon {
+  font-size: var(--icon-lg);
+  line-height: 1;
+}
+
+.kpi-card-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.kpi-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.kpi-card-value {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.kpi-card-trend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+.trend-icon {
+  font-size: var(--text-sm);
+}
+
+.trend-value {
+  font-weight: var(--font-semibold);
+}
+
+.trend-label {
+  color: var(--text-muted);
+}
+
+/* Trend Colors */
+.trend-up {
+  color: var(--success-500);
+}
+
+.trend-down {
+  color: var(--error-500);
+}
+
+.trend-neutral {
+  color: var(--neutral-500);
+}
+
+/* Color Variants */
+.kpi-card-primary {
+  border-left: 4px solid var(--primary-600);
+}
+
+.kpi-card-primary .kpi-card-value {
+  color: var(--primary-600);
+}
+
+.kpi-card-success {
+  border-left: 4px solid var(--success-500);
+}
+
+.kpi-card-success .kpi-card-value {
+  color: var(--success-500);
+}
+
+.kpi-card-warning {
+  border-left: 4px solid var(--warning-500);
+}
+
+.kpi-card-warning .kpi-card-value {
+  color: var(--warning-500);
+}
+
+.kpi-card-error {
+  border-left: 4px solid var(--error-500);
+}
+
+.kpi-card-error .kpi-card-value {
+  color: var(--error-500);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .kpi-card {
+    padding: var(--space-md);
+  }
+
+  .kpi-card-value {
+    font-size: var(--text-3xl);
+  }
+
+  .kpi-card-icon {
+    font-size: var(--icon-md);
+  }
+}

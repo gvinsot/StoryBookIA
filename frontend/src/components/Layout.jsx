@@ -47,6 +47,18 @@ function Layout({ children }) {
           >
             Locataires
           </Link>
+          <Link 
+            to="/kpi" 
+            className={`nav-link ${isActive('/kpi') ? 'active' : ''}`}
+          >
+            KPI
+          </Link>
+          <Link 
+            to="/search" 
+            className={`nav-link ${isActive('/search') ? 'active' : ''}`}
+          >
+            Recherche
+          </Link>
         </div>
       </nav>
       <main className="main-content">
