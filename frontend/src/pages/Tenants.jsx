@@ -183,7 +183,7 @@ function Tenants() {
                 <th>Propriété</th>
                 <th>Contact</th>
                 <th>Contrat</th>
-                <th>Loyeur</th>
+                <th>Loyer</th>
                 <th>Statut</th>
                 <th>Actions</th>
               </tr>
