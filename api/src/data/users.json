@@ -1,0 +1,74 @@
+[
+  {
+    "id": "usr_001",
+    "firstName": "Jean",
+    "lastName": "Dupont",
+    "email": "jean.dupont@storybookia.io",
+    "role": "admin",
+    "status": "active",
+    "createdAt": "2024-01-15T09:30:00.000Z"
+  },
+  {
+    "id": "usr_002",
+    "firstName": "Marie",
+    "lastName": "Martin",
+    "email": "marie.martin@storybookia.io",
+    "role": "editor",
+    "status": "active",
+    "createdAt": "2024-02-20T14:15:00.000Z"
+  },
+  {
+    "id": "usr_003",
+    "firstName": "Pierre",
+    "lastName": "Bernard",
+    "email": "pierre.bernard@storybookia.io",
+    "role": "viewer",
+    "status": "active",
+    "createdAt": "2024-03-10T08:45:00.000Z"
+  },
+  {
+    "id": "usr_004",
+    "firstName": "Sophie",
+    "lastName": "Dubois",
+    "email": "sophie.dubois@storybookia.io",
+    "role": "editor",
+    "status": "inactive",
+    "createdAt": "2024-04-05T11:00:00.000Z"
+  },
+  {
+    "id": "usr_005",
+    "firstName": "Luc",
+    "lastName": "Moreau",
+    "email": "luc.moreau@storybookia.io",
+    "role": "viewer",
+    "status": "active",
+    "createdAt": "2024-05-18T16:20:00.000Z"
+  },
+  {
+    "id": "usr_006",
+    "firstName": "Camille",
+    "lastName": "Leroy",
+    "email": "camille.leroy@storybookia.io",
+    "role": "admin",
+    "status": "active",
+    "createdAt": "2024-06-22T10:10:00.000Z"
+  },
+  {
+    "id": "usr_007",
+    "firstName": "Thomas",
+    "lastName": "Petit",
+    "email": "thomas.petit@storybookia.io",
+    "role": "viewer",
+    "status": "inactive",
+    "createdAt": "2024-07-30T13:55:00.000Z"
+  },
+  {
+    "id": "usr_008",
+    "firstName": "Julie",
+    "lastName": "Roux",
+    "email": "julie.roux@storybookia.io",
+    "role": "editor",
+    "status": "active",
+    "createdAt": "2024-08-12T09:05:00.000Z"
+  }
+]

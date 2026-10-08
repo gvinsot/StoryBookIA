@@ -1,0 +1,117 @@
+/* DataTable - Generic reusable table styles (design-system tokens only) */
+
+.data-table-wrapper {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-default);
+  overflow: hidden;
+}
+
+.data-table-container {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.data-table th {
+  background: var(--neutral-50);
+  padding: var(--space-md);
+  text-align: left;
+  font-weight: var(--font-semibold);
+  color: var(--neutral-700);
+  border-bottom: 2px solid var(--neutral-200);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--neutral-100);
+  vertical-align: middle;
+  color: var(--text-secondary);
+}
+
+.data-table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+.data-table tbody tr:hover {
+  background: var(--neutral-50);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Loading skeleton */
+.data-table-skeleton-row .skeleton-cell {
+  height: 16px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--neutral-200) 25%,
+    var(--neutral-100) 50%,
+    var(--neutral-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: dataTablePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dataTablePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Error banner */
+.data-table-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--error-50);
+  color: var(--error-700);
+  border-bottom: 1px solid var(--error-100);
+  font-weight: var(--font-medium);
+}
+
+/* Empty state */
+.data-table-empty-cell {
+  padding: var(--space-2xl) !important;
+}
+
+.data-table-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  text-align: center;
+}
+
+.data-table-empty-icon {
+  font-size: var(--icon-lg);
+  opacity: 0.5;
+}
+
+.data-table-empty-title {
+  font-size: var(--text-lg);
+  color: var(--neutral-600);
+  font-weight: var(--font-medium);
+  margin: 0;
+}
+
+.data-table-empty-subtitle {
+  font-size: var(--text-sm);
+  color: var(--neutral-400);
+  margin: 0;
+}
+
+/* Accessibility - Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .data-table-skeleton-row .skeleton-cell {
+    animation: none;
+  }
+}

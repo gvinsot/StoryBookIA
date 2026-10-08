@@ -9,6 +9,7 @@ import { componentRouter } from './routes/components.js';
 import { storybookRouter } from './routes/storybook.js';
 import { historyRouter } from './routes/history.js';
 import { downloadRouter } from './routes/download.js';
+import { usersRouter } from './routes/users.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,11 +30,13 @@ app.use('/api/components', componentRouter);
 app.use('/api/storybook', storybookRouter);
 app.use('/api/history', historyRouter);
 app.use('/api/download', downloadRouter);
+app.use('/api/users', usersRouter);
 app.use('/pitch', pitchToUXRouter);
 app.use('/components', componentRouter);
 app.use('/storybook', storybookRouter);
 app.use('/history', historyRouter);
 app.use('/download', downloadRouter);
+app.use('/users', usersRouter);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -65,9 +68,9 @@ app.get('/storybook/:projectId', async (req, res) => {
     let html = await fs.readFile(indexPath, 'utf-8');
     
     // Replace /src with /storybook/<projectId>/src for proper asset loading
-    html = html.replace(/href="\/src\//g, `href="/storybook/${projectId}/src/`);
-    html = html.replace(/src="\/src\//g, `src="/storybook/${projectId}/src/`);
-    html = html.replace(/src="\//g, `src="/storybook/${projectId}/`);
+    html = html.replace(/href=\"\\/src\\//g, `href="/storybook/${projectId}/src/`);
+    html = html.replace(/src=\"\\/src\\//g, `src="/storybook/${projectId}/src/`);
+    html = html.replace(/src=\"\\//g, `src="/storybook/${projectId}/`);
     
     res.set('Content-Type', 'text/html');
     res.send(html);

@@ -1,0 +1,118 @@
+/* Users Page - Référentiel des utilisateurs (design-system tokens only) */
+
+.users-page {
+  padding: var(--space-lg) var(--space-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Reuse the shared page-header pattern (defined per-page for consistency with Tenants) */
+.users-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--neutral-200);
+}
+
+.users-page .page-header-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.users-page .page-title {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--neutral-900);
+  margin: 0;
+}
+
+.users-page .page-subtitle {
+  font-size: var(--text-base);
+  color: var(--neutral-500);
+  margin: 0;
+}
+
+.users-count {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--primary-700);
+  background: var(--primary-50);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+/* Toolbar */
+.users-toolbar {
+  margin-bottom: var(--space-lg);
+  background: var(--neutral-50);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+}
+
+/* User cell */
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+  color: var(--text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-bold);
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.user-name {
+  font-weight: var(--font-medium);
+  color: var(--neutral-900);
+}
+
+.user-email {
+  font-size: var(--text-xs);
+  color: var(--neutral-500);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-date-cell {
+  color: var(--neutral-600);
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .users-page {
+    padding: var(--space-md);
+  }
+
+  .users-page .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .users-page .page-title {
+    font-size: var(--text-2xl);
+  }
+}

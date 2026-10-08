@@ -1,0 +1,60 @@
+/* SearchBar - Reusable search input (design-system tokens only) */
+
+.search-bar {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar-icon {
+  position: absolute;
+  left: var(--space-sm);
+  font-size: var(--text-base);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.search-bar-input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) calc(var(--space-sm) * 2.5);
+  border: 1px solid var(--neutral-300);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-family: var(--font-primary);
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  min-height: var(--touch-target-min);
+}
+
+.search-bar-input:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-100);
+}
+
+/* Hide the native search clear button (we provide our own) */
+.search-bar-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.search-bar-clear {
+  position: absolute;
+  right: var(--space-xs);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--neutral-400);
+  font-size: var(--text-sm);
+  padding: var(--space-xs);
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.search-bar-clear:hover {
+  color: var(--neutral-600);
+  background: var(--neutral-100);
+}

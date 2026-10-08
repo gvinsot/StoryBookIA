@@ -59,6 +59,12 @@ function Layout({ children }) {
           >
             Recherche
           </Link>
+          <Link 
+            to="/users" 
+            className={`nav-link ${isActive('/users') ? 'active' : ''}`}
+          >
+            Utilisateurs
+          </Link>
         </div>
       </nav>
       <main className="main-content">

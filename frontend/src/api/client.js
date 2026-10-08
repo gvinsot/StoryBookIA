@@ -49,4 +49,19 @@ export const downloadAPI = {
   }
 };
 
+// Users API (référentiel des utilisateurs)
+export const usersAPI = {
+  /**
+   * Liste les utilisateurs du référentiel.
+   * @param {string} [search] - Terme de recherche optionnel (nom, email, rôle)
+   * @returns {Promise<{count: number, users: Array}>}
+   */
+  list: async (search = '') => {
+    const response = await api.get('/users', {
+      params: search ? { q: search } : {}
+    });
+    return response.data;
+  }
+};
+
 export default api;
