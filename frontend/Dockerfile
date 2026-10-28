@@ -1,5 +1,8 @@
 # Build stage
-FROM --platform=linux/amd64 node:25-alpine AS builder
+# Node 25 is a non-supported line: it receives no fix for the October 2026
+# security releases (CVE-2026-111497 Brotli RCE and the rest of the
+# 2026-10-21 batch). 24.22.1 is the patched LTS line.
+FROM --platform=linux/amd64 node:24.22.1-alpine AS builder
 
 ARG APP_VERSION=dev
 ARG GIT_COMMIT=unknown
@@ -22,7 +25,9 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM --platform=linux/amd64 nginx:alpine
+# Pinned to 1.30.6, which fixes the 2026-10-14 nginx advisories
+# (CVE-2026-15176, CVE-2026-93479, CVE-2026-97205).
+FROM --platform=linux/amd64 nginx:1.30.6-alpine
 
 # Copy built application
 COPY --from=builder /app/dist /usr/share/nginx/html
